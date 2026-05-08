@@ -23,6 +23,7 @@ function renderHabits() {
         item.innerHTML = `
             <div class="habit-header">
                 <span>${habit.name}</span>
+                <button class="editBtn">Edit</button>
                 <span class="streak">streak: ${getStreak(habit)}</span>
                 <span class="rate">Completion rate: ${completionRate}%</span>
                 <button class="checkBtn">${completedToday ? '✅' : '⬜'}</button>
@@ -48,6 +49,14 @@ function renderHabits() {
             renderHabits();
         })
         list.appendChild(item)
+
+        item.querySelector('.editBtn').addEventListener('click',() => {
+            const newName = prompt('New habit name: ')
+            if (!newName) return;
+            habit.name = newName.trim();
+            localStorage.setItem('habits', JSON.stringify(habits));
+            renderHabits();
+        });
 
         const heatmap = item.querySelector('.heatmap');
 
@@ -124,5 +133,11 @@ document.getElementById('addBtn').addEventListener('click', () => {
 
     renderHabits();
 });
+
+document.getElementById('theme').addEventListener('click', () => {
+    const isLight = document.body.getAttribute('data-theme') === 'light';
+    document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
+    document.getElementById('theme').textContent = isLight ? 'Light' : "Dark"
+})
 
 renderHabits()

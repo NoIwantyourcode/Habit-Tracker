@@ -4,9 +4,25 @@
     padding: 0;
 }
 
+:root {
+    --bg: #0e0e10;
+    --surface: #1a1a1f;
+    --border: #2a2a32;
+    --text: #f0f0f0;
+    --accent: #4ecb71;
+}
+
+[data-theme="light"] {
+    --bg: #f5f5f5;
+    --surface: #ffffff;
+    --border: #e0e0e0;
+    --text: #111111;
+    --accent: #2ea84f;
+}
+
 body {
-    background: #0e0e10;
-    color: #f0f0f0;
+    background: var(--bg);
+    color: var(--text);
     font-family: sans-serif;
     padding: 2rem;
     max-width: 700px;
@@ -26,10 +42,10 @@ h1 {
 }
 
 input {
-    background: #1a1a1f;
+    background: var(--surface);
     border: 1px;
     border-style: 8px;
-    color: #f0f0f0;
+    color: var(--text);
     padding: 0.5rem 0.75rem;
     font-size: 0.9rem;
     flex: 1;
@@ -37,12 +53,12 @@ input {
 
 input:focus {
     outline: none;
-    border-color: #4ecb71;
+    border-color: var(--accent);
 }
 
 button {
-    background: #1a1a1f;
-    color: #f0f0f0;
+    background: var(--surface);
+    color: var(--text);
     border: 1px;
     border-style: solid;
     border-color: #333;
@@ -54,11 +70,11 @@ button {
 }
 
 button:hover {
-    background: #2a2a32;
+    background: var(--border);
 }
 
 #addBtn {
-    background: #4ecb71;
+    background: var(--accent);
     color: #111;
     border: none;
     font-weight: 700;
@@ -75,10 +91,10 @@ button:hover {
 }
 
 .habit {
-    background: #1a1a1f;
+    background: var(--surface);
     border: 1px;
     border-style: solid;
-    border-color: #2a2a32;
+    border-color: var(--border);
     border-radius: 12px;
     padding: 1rem;
     transition: border-color 0.15s;
@@ -108,7 +124,7 @@ button:hover {
 
 .rate {
     font-size: 0.85rem;
-    color: #4ecb71;
+    color: var(--accent);
 }
 
 .best-streak {
