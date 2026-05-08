@@ -26,6 +26,7 @@ function renderHabits() {
                 <span class="streak">streak: ${getStreak(habit)}</span>
                 <span class="rate">Completion rate: ${completionRate}%</span>
                 <button class="checkBtn">${completedToday ? '✅' : '⬜'}</button>
+                <span class="best-streak">Best: ${getBestStreak(habit)}</span>
                 <button class="deleteBtn">x</button>
             </div>
             <div class="heatmap" id="heatmap-${habit.id}"></div>
@@ -82,6 +83,32 @@ function getStreak(habit) {
     }
 
     return streak;
+}
+
+function getBestStreak(habit) {
+    let best = 0;
+    let current = 0;
+
+    const sorted = [...habit.completions].sort((a, b) => new Date(a) - new Date(b));
+
+    sorted.forEach((date, i) => {
+        if (i === 0) {
+            current = 1;
+        } else {
+            const prev = new Date(sorted[i - 1]);
+            const curr = new Date(date);
+            const diff = (curr - prev) / (1000 * 60 * 60 * 24);
+
+            if (diff === 1) {
+                current++
+            } else {
+                current = 1
+            }
+        }
+        best = Math.max(best, current);
+    });
+
+    return best;
 }
 
 document.getElementById('addBtn').addEventListener('click', () => {
