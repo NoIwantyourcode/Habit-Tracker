@@ -1,0 +1,12 @@
+.heatmap {
+    display: grid;
+    grid-template-columns: repeat(15, 14px);
+    gap: 3px;
+    margin-top: 0.5rem;
+}
+
+.heatmap-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+}

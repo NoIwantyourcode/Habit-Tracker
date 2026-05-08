@@ -11,10 +11,20 @@ function renderHabits() {
         const today = new Date().toLocaleDateString();
         const completedToday = habit.completions.includes(today);
 
+        const totalDays = 30;
+        const completedDays = habit.completions.filter(d => {
+            const date = new Date(d);
+            const thirtydaysAgo = new Date()
+            thirtydaysAgo.setDate(thirtydaysAgo.getDate() - 30);
+            return date >= thirtydaysAgo;
+        }).length;
+        const completionRate = Math.round((completedDays/totalDays) * 100);
+
         item.innerHTML = `
             <div class="habit-header">
                 <span>${habit.name}</span>
                 <span class="streak">streak: ${getStreak(habit)}</span>
+                <span class="rate">Completion rate: ${completionRate}%</span>
                 <button class="checkBtn">${completedToday ? '✅' : '⬜'}</button>
                 <button class="deleteBtn">x</button>
             </div>
