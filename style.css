@@ -9,7 +9,7 @@
     --surface: #1a1a1f;
     --border: #2a2a32;
     --text: #f0f0f0;
-    --accent: #4ecb71;
+    --accent: #00ff48;
 }
 
 [data-theme="light"] {
@@ -17,7 +17,7 @@
     --surface: #ffffff;
     --border: #e0e0e0;
     --text: #111111;
-    --accent: #2ea84f;
+    --accent: #00ff44;
 }
 
 body {
@@ -224,4 +224,9 @@ button:hover {
 .reminderBtn {
     font-size: 0.75rem;
     padding: 0.3rem 0.6rem;
+}
+
+.colorSetter {
+    display: block;
+    align-items: safe;
 }

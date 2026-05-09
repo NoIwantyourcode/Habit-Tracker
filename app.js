@@ -247,7 +247,7 @@ document.getElementById('theme').addEventListener('click', () => {
 
 document.getElementById('viewToggle').addEventListener('click', () => {
     viewDays = viewDays === 30 ? 7 : 30;
-    document.getElementById('viewToggle').textContent = viewDays === 30 ? '7 Day View' : '30 Day View';
+    document.getElementById('viewToggle').textContent = viewDays === 30 ? '7 Day View' : '30 Day View' ;
     renderHabits()
 })
 
