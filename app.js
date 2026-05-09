@@ -73,6 +73,8 @@ function renderHabits() {
             heatmap.appendChild(box);
         }
     })
+
+    renderStats();
 }
 
 function getStreak(habit) {
@@ -120,6 +122,27 @@ function getBestStreak(habit) {
     return best;
 }
 
+function renderStats() {
+    const today = new Date().toLocaleDateString();
+    const totalHabits = habits.length;
+    const completedToday = habits.filter(h => h.completions.includes(today)).length;
+    const longestStreak = habits.reduce((max, h) => Math.max(max, getStreak(h)), 0);
+
+    document.getElementById('stats').innerHTML = `
+        <div class="stat">
+            <span class="start-value">${totalHabits}</span>
+            <span class="stat-label">Total Habits</span>
+        </div>
+        <div class="stat">
+            <span class="stat-value">${completedToday}/${totalHabits}</span>
+            <span class="stat-label">Done Today</span>
+        <div class="stat">
+            <span class="stat-value">${longestStreak}</span>
+            <span class="stat-label">Longest Streak</span>
+        </div>
+    `;
+}
+
 document.getElementById('addBtn').addEventListener('click', () => {
     const name = document.getElementById('habitInput').value.trim();
     if (!name) return;
@@ -137,7 +160,8 @@ document.getElementById('addBtn').addEventListener('click', () => {
 document.getElementById('theme').addEventListener('click', () => {
     const isLight = document.body.getAttribute('data-theme') === 'light';
     document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
-    document.getElementById('theme').textContent = isLight ? 'Light' : "Dark"
-})
+    document.getElementById('theme').textContent = isLight ? 'Light' : "Dark";
+});
 
-renderHabits()
+renderHabits();
+renderHabits();
