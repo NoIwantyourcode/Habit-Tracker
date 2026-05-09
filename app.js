@@ -90,6 +90,18 @@ function renderHabits() {
             renderHabits();
         });
 
+        item.querySelector('.reminderBtn').addEventListener('click', () => {
+            if (Notification.permission !== 'granted') {
+                alert('Please allow Notifications first');
+                return;
+            }
+            const time = prompt('Remind me a (HH:MM):', '09:00');
+            if (!time) return;
+            habit.reminder = time
+            localStorage.setItem('habits', JSON.stringify(habits));
+            alert(`Reminder set for ${time} daily`);
+        });
+
         const heatmap = item.querySelector('.heatmap');
 
         for (let i = viewDays - 1; i >= 0; i--) {
@@ -164,18 +176,35 @@ function renderStats() {
 
     document.getElementById('stats').innerHTML = `
         <div class="stat">
-            <span class="start-value">${totalHabits}</span>
+            <span class="stat-value">${totalHabits}</span>
             <span class="stat-label">Total Habits</span>
         </div>
         <div class="stat">
             <span class="stat-value">${completedToday}/${totalHabits}</span>
             <span class="stat-label">Done Today</span>
+        </div>
         <div class="stat">
             <span class="stat-value">${longestStreak}</span>
             <span class="stat-label">Longest Streak</span>
         </div>
     `;
 }
+
+function checkReminders() {
+    const now = new Date();
+    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+
+    habits.forEach(habit => {
+        if (habit.reminder === currentTime) {
+            console.log('firing reminder for:', habit.time);
+            new Notification('Habit Reminder', {
+                body: `Don't forget to complete: ${habit.time}`
+            });
+        }
+    });
+}
+
+setInterval(checkReminders, 60000);
 
 document.getElementById('addBtn').addEventListener('click', () => {
     const name = document.getElementById('habitInput').value.trim();
@@ -203,5 +232,4 @@ document.getElementById('viewToggle').addEventListener('click', () => {
     renderHabits()
 })
 
-renderHabits();
 renderHabits();
