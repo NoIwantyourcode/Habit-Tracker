@@ -1,5 +1,6 @@
 let habits = JSON.parse(localStorage.getItem('habits') || '[]');
 let viewDays = 30;
+let lastProgress = parseInt(localStorage.getItem('lastProgress') || 0);
 
 if ('Notification' in window) {
     Notification.requestPermission();
@@ -195,13 +196,15 @@ function renderStats() {
     document.getElementById('progressBar').style.width = `${progress}%` 
     document.getElementById('progresslabel').textContent = `Today's Progress - ${progress}%`
 
-    if (progress === 100 && totalHabits > 0) {
+    if (progress === 100 && totalHabits > 0 && lastProgress !== 100) {
         confetti({
             particleCount: 100,
             spread: 70,
             origin: {y:0.6},
         });
     }
+    lastProgress = progress;
+    localStorage.setItem('lastProgress', progress)
 }
 
 function checkReminders() {
