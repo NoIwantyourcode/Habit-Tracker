@@ -188,6 +188,10 @@ function renderStats() {
             <span class="stat-label">Longest Streak</span>
         </div>
     `;
+
+    const progress = totalHabits === 0 ? 0 : Math.round((completedToday / totalHabits) * 100);
+    document.getElementById('progressBar').style.width = `${progress}%` 
+    document.getElementById('progresslabel').textContent = `Today's Progress - ${progress}%`
 }
 
 function checkReminders() {
@@ -208,10 +212,12 @@ setInterval(checkReminders, 60000);
 
 document.getElementById('addBtn').addEventListener('click', () => {
     const name = document.getElementById('habitInput').value.trim();
+    const color = document.getElementById('habitColor').value
     if (!name) return;
     habits.push({
         id: Date.now(), name, 
-        completions: []
+        completions: [],
+        color: color
     });
 
     localStorage.setItem('habits', JSON.stringify(habits));

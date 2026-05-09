@@ -198,3 +198,23 @@ button:hover {
     text-transform: uppercase;
     letter-spacing: 0.05rem
 }
+
+#progressContainer {
+    background: var(--border);
+    border-radius: 100px;
+    height: 20px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 100px;
+    transition: width 0.3s ease;
+}
+
+#progresslabel {
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
