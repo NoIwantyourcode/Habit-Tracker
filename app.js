@@ -194,6 +194,14 @@ function renderStats() {
     const progress = totalHabits === 0 ? 0 : Math.round((completedToday / totalHabits) * 100);
     document.getElementById('progressBar').style.width = `${progress}%` 
     document.getElementById('progresslabel').textContent = `Today's Progress - ${progress}%`
+
+    if (progress === 100 && totalHabits > 0) {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: {y:0.6},
+        });
+    }
 }
 
 function checkReminders() {

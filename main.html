@@ -8,9 +8,10 @@
         <div id="topbar">
             <button id="theme">Light</button>
             <input type="text" id="habitInput" placeholder="add a habit...">
+            <label style="color: #888; font-size: 0.85rem;">Color</label>
+            <input type="color" id="habitColor" value="#4ecb71">
             <button id="addBtn">Add!</button>
             <button id="viewToggle">7 day button</button>
-            <input type="color" id="habitColor" value="#4ecb71">
         </div>
         <div class="progress">
             <div id="progresslabel">Today's Progress</div>
@@ -21,5 +22,6 @@
         <div id="stats"></div>
         <div id="habitList"></div>
         <script src="app.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     </body>
 </html>
