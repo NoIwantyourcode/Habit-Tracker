@@ -118,6 +118,8 @@ function renderHabits() {
 
             heatmap.style.gridTemplateColumns = `repeat(${viewDays === 7 ? 7 : 15}, 14px)`;
         }
+
+        item.style.borderLeft = `4px solid ${habit.color || '#4ecb71'}`;
     })
 
     renderStats();
