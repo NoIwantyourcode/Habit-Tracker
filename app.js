@@ -1,12 +1,43 @@
 let habits = JSON.parse(localStorage.getItem('habits') || '[]');
+let viewDays = 30;
+
+if ('Notification' in window) {
+    Notification.requestPermission();
+}
 
 function renderHabits() {
     const list = document.getElementById('habitList');
     list.innerHTML = '';
 
     habits.forEach(habit => {
-        const item = document.createElement('div');
+        const item = document.createElement('div')
         item.classList.add('habit');
+
+        item.draggable = true;
+        item.addEventListener('dragstart', () => {
+            window.draggedHabitId = habit.id;
+            item.style.opacity = '0.5';
+        });
+
+        item.addEventListener('dragend', () => {
+            item.style.opacity = '1';
+        })
+
+        item.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        item.addEventListener('drop', () => {
+            const draggedId = window.draggedHabitId;
+            const draggedIndex = habits.findIndex(h => h.id === draggedId);
+            const targetIndex = habits.findIndex(h => h.id === habit.id);
+
+            const [dragged] = habits.splice(draggedIndex, 1);
+            habits.splice(targetIndex, 0, dragged);
+
+            localStorage.setItem('habits', JSON.stringify(habits));
+            renderHabits();
+        });
 
         const today = new Date().toLocaleDateString();
         const completedToday = habit.completions.includes(today);
@@ -28,6 +59,7 @@ function renderHabits() {
                 <span class="rate">Completion rate: ${completionRate}%</span>
                 <button class="checkBtn">${completedToday ? '✅' : '⬜'}</button>
                 <span class="best-streak">Best: ${getBestStreak(habit)}</span>
+                <button class="reminderBtn">Remind Me!</button>
                 <button class="deleteBtn">x</button>
             </div>
             <div class="heatmap" id="heatmap-${habit.id}"></div>
@@ -60,7 +92,7 @@ function renderHabits() {
 
         const heatmap = item.querySelector('.heatmap');
 
-        for (let i = 29; i >= 0; i--) {
+        for (let i = viewDays - 1; i >= 0; i--) {
             const date = new Date();
             date.setDate(date.getDate() - i);
             const dateString = date.toLocaleDateString();
@@ -71,6 +103,8 @@ function renderHabits() {
             box.style.background = completed ? '#4ecb71' : '#2a2a32';
             box.title = dateString;
             heatmap.appendChild(box);
+
+            heatmap.style.gridTemplateColumns = `repeat(${viewDays === 7 ? 7 : 15}, 14px)`;
         }
     })
 
@@ -162,6 +196,12 @@ document.getElementById('theme').addEventListener('click', () => {
     document.body.setAttribute('data-theme', isLight ? 'dark' : 'light');
     document.getElementById('theme').textContent = isLight ? 'Light' : "Dark";
 });
+
+document.getElementById('viewToggle').addEventListener('click', () => {
+    viewDays = viewDays === 30 ? 7 : 30;
+    document.getElementById('viewToggle').textContent = viewDays === 30 ? '7 Day View' : '30 Day View';
+    renderHabits()
+})
 
 renderHabits();
 renderHabits();
